@@ -1,16 +1,22 @@
-name: Vercel Deployment
+# IMPORTANT NOTE: This workflow is OPTIONAL and not required for deployment
+# The GitHub-Vercel integration is already working without this file
+# This workflow provides additional CI/CD capabilities if desired in the future
+
+name: Vercel Deployment (Extended CI/CD)
 
 on:
+  # Triggered when code is pushed to the main branch
   push:
     branches: [main]
+  # Triggered when pull requests are created or updated
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  deploy:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -22,18 +28,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
+      - name: Run linter
         run: npm run lint || true
 
-      - name: Build
+      - name: Build application
         run: npm run build
 
-      - name: Deploy to Vercel
-        if: success()
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
-          working-directory: ./
+      # The following step is OPTIONAL and requires adding secrets to your repository
+      # Basic deployments already work through the direct GitHub-Vercel integration
+      # This is only needed if you want enhanced CI/CD capabilities
+
+      # - name: Deploy to Vercel (OPTIONAL)
+      #   if: success() && false # Disabled by default - remove "& false" to enable
+      #   uses: amondnet/vercel-action@v20
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }} # Create in Vercel account settings > Tokens
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Get from Vercel project settings
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Get from Vercel project settings
+      #     vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+      #     working-directory: ./
