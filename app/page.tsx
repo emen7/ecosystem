@@ -1,12 +1,12 @@
 'use client';
 
-// @ts-ignore - Ignoring type errors for demonstration purposes
 import React, { useState } from 'react';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { useTheme } from './contexts/ThemeContext';
 import HeaderWithButtons from './components/minimal/HeaderWithButtons';
 import SettingsPanel from './components/SettingsPanel';
 
 export default function Home() {
+  const { theme } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedPaper, setSelectedPaper] = useState('');
@@ -21,7 +21,6 @@ export default function Home() {
   };
 
   return (
-    <ThemeProvider>
       <div className="relative min-h-screen bg-gray-900 text-white">
         {/* Header with hamburger and settings buttons */}
         <HeaderWithButtons 
@@ -55,6 +54,5 @@ export default function Home() {
           </div>
         </main>
       </div>
-    </ThemeProvider>
   );
 }

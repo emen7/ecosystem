@@ -2,14 +2,14 @@
 
 // This is a simplified version with minimal dependencies
 import React from 'react';
-import { ThemeProvider } from '../../contexts/ThemeContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 // Static version that doesn't require params
 export default function PaperPage({ params }: { params: { paperNumber: string } }) {
   const paperNumber = params.paperNumber;
+  const { theme } = useTheme();
   
   return (
-    <ThemeProvider>
       <div className="min-h-screen bg-gray-900 text-white p-4">
         <header className="fixed top-0 left-0 right-0 z-40 bg-gray-900 text-white shadow-md">
           <div className="container mx-auto flex justify-between items-center h-14 px-4">
@@ -101,6 +101,5 @@ export default function PaperPage({ params }: { params: { paperNumber: string } 
           </div>
         </main>
       </div>
-    </ThemeProvider>
   );
 }
