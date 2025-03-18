@@ -3,24 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const ReadingArea: React.FC<{ 
-  selectedPaper: string, 
-  selectedSection: string,
-  paragraphNumber?: string 
-}> = ({ 
+interface ReadingAreaProps {
+  selectedPaper: string;
+  selectedSection: string;
+  paragraphNumber?: string;
+}
+
+const ReadingArea: React.FC<ReadingAreaProps> = ({ 
   selectedPaper, 
   selectedSection,
   paragraphNumber 
 }) => {
-  const {
-    theme,
-    colorScheme,
-    fontFamily,
-    fontSize,
-    lineSpacing,
-    marginWidth,
-    showReferenceNumbers
-  } = useTheme();
+  const { theme } = useTheme();
   
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
@@ -55,8 +49,8 @@ const ReadingArea: React.FC<{
         
         console.log(`Fetching paper: ${paperNumber}`);
         
-        // Use the path to the original JSON files
-        const response = await fetch(`/UB-Reader/json/${paperNumber}.json`);
+        // Use the path to the JSON files, relative to the public directory
+        const response = await fetch(`/json/${paperNumber}.json`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
@@ -148,45 +142,39 @@ const ReadingArea: React.FC<{
     }
   }, [paragraphNumber, paragraphs]);
 
-  // Map theme options to Tailwind classes
+  // Get font classes based on theme
   const getFontFamilyClass = () => {
-    switch (fontFamily) {
-      case 'sans': return 'font-sans';
-      case 'serif': return 'font-serif';
-      default: return 'font-sans';
-    }
+    return theme.fontFamily === 'serif' ? 'font-serif' : 'font-sans';
   };
 
   const getFontSizeClass = () => {
-    switch (fontSize) {
-      case 'xs': return 'text-sm';
-      case 'sm': return 'text-base';
-      case 'base': return 'text-lg';
-      case 'lg': return 'text-xl';
-      case 'xl': return 'text-2xl';
-      default: return 'text-base';
+    switch (theme.fontSize) {
+      case 'small': return 'text-sm';
+      case 'large': return 'text-lg';
+      case 'xlarge': return 'text-xl';
+      default: return 'text-base'; // medium
     }
   };
 
   const getLineSpacingClass = () => {
-    switch (lineSpacing) {
-      case 'tight': return 'leading-snug';
-      case 'normal': return 'leading-normal';
+    switch (theme.lineSpacing) {
+      case 'compact': return 'leading-snug';
       case 'relaxed': return 'leading-relaxed';
-      case 'loose': return 'leading-loose';
-      default: return 'leading-normal';
+      default: return 'leading-normal'; // normal
     }
   };
 
   const getMarginWidthClass = () => {
-    switch (marginWidth) {
-      case 'sm': return 'mx-2 md:mx-4';
-      case 'md': return 'mx-4 md:mx-8';
-      case 'lg': return 'mx-8 md:mx-16';
-      case 'xl': return 'mx-12 md:mx-24';
-      default: return 'mx-4 md:mx-8';
+    switch (theme.marginWidth) {
+      case 'narrow': return 'mx-2 md:mx-4';
+      case 'wide': return 'mx-8 md:mx-16';
+      default: return 'mx-4 md:mx-8'; // medium
     }
   };
+
+  // Determine if we're using modern or traditional theme
+  // Since we don't have this in ThemeContext, default to modern for sans-serif
+  const isModernTheme = theme.fontFamily === 'sans';
 
   if (loading) {
     return <div className="p-4 text-gray-700 dark:text-gray-300">Loading content...</div>;
@@ -203,7 +191,7 @@ const ReadingArea: React.FC<{
       ${getLineSpacingClass()} 
       ${getMarginWidthClass()} 
       p-4 transition-colors duration-300
-      ${theme === 'modern' ? 'modern-theme' : 'traditional-theme'}
+      ${isModernTheme ? 'modern-theme' : 'traditional-theme'}
     `}>
       <h2 className={`font-bold mb-2 ${getFontSizeClass() === 'text-sm' ? 'text-lg' : getFontSizeClass() === 'text-base' ? 'text-xl' : getFontSizeClass() === 'text-lg' ? 'text-2xl' : getFontSizeClass() === 'text-xl' ? 'text-3xl' : 'text-4xl'}`}>
         {selectedPaper}
@@ -215,7 +203,7 @@ const ReadingArea: React.FC<{
       )}
       
       {paragraphs.length > 0 ? (
-        <div className={`${theme === 'modern' ? 'modern-paragraph' : 'traditional-paragraph'}`}>
+        <div className={`${isModernTheme ? 'modern-paragraph' : 'traditional-paragraph'}`}>
           {paragraphs.map((paragraph, index) => (
             <p 
               key={paragraph.id} 
@@ -227,20 +215,12 @@ const ReadingArea: React.FC<{
           ))}
         </div>
       ) : (
-        <div className={`whitespace-pre-line ${theme === 'modern' ? 'modern-paragraph' : 'traditional-paragraph'}`}>
+        <div className={`whitespace-pre-line ${isModernTheme ? 'modern-paragraph' : 'traditional-paragraph'}`}>
           {content || 'Select a paper from the sidebar to begin reading.'}
         </div>
       )}
       
-      {/* Debug information */}
-      <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-md text-sm">
-        <p>Debug Info:</p>
-        <p>Selected Paper: {selectedPaper || 'None'}</p>
-        <p>Selected Section: {selectedSection || 'None'}</p>
-        <p>Paragraph Number: {paragraphNumber || 'None'}</p>
-        <p>Paragraphs Loaded: {paragraphs.length}</p>
-        {error && <p className="text-red-500">Error: {error}</p>}
-      </div>
+      {/* Debug information removed for production */}
     </div>
   );
 };
