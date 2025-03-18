@@ -25,7 +25,7 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
   onSectionSelect,
   activeSection
 }) => {
-  const { colorScheme } = useTheme();
+  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -94,11 +94,11 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
         className={`
           flex items-center justify-between px-4 py-2 w-full
           text-left font-medium rounded-md shadow-sm
-          ${colorScheme === 'dark' 
+          ${theme.colorScheme === 'dark' 
             ? 'bg-gray-800 text-white hover:bg-gray-700' 
             : 'bg-white text-gray-900 hover:bg-gray-100'
           }
-          border ${colorScheme === 'dark' ? 'border-gray-700' : 'border-gray-300'}
+          border ${theme.colorScheme === 'dark' ? 'border-gray-700' : 'border-gray-300'}
         `}
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
@@ -124,7 +124,7 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
       <div
         className={`
           absolute z-10 mt-1 w-full rounded-md shadow-lg 
-          ${colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'}
+          ${theme.colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'}
           max-h-60 overflow-auto
           transition-opacity duration-200 ease-in-out
           ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}
@@ -133,7 +133,7 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
         <ul 
           className={`
             py-1 divide-y
-            ${colorScheme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}
+            ${theme.colorScheme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}
           `}
           role="menu"
           aria-orientation="vertical"
@@ -146,10 +146,10 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
               className={`
                 py-2 px-4 text-sm cursor-pointer
                 ${section.id === activeSection
-                  ? (colorScheme === 'dark'
+                  ? (theme.colorScheme === 'dark'
                     ? 'bg-blue-900 text-white'
                     : 'bg-blue-100 text-blue-900')
-                  : (colorScheme === 'dark'
+                  : (theme.colorScheme === 'dark'
                     ? 'text-gray-300 hover:bg-gray-700'
                     : 'text-gray-700 hover:bg-gray-100')
                 }
