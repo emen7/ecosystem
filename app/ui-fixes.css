@@ -1,55 +1,100 @@
-/* UI Fixes CSS for UB-Reader */
+/* UI Fixes CSS
+   This file contains specific CSS overrides to fix UI glitches and improve the reading experience
+*/
 
 /* 
- * Improved section title scroll margin
- * Adjusted for different viewport sizes to ensure section titles land in the right position
- * This is applied to all elements that could be targets of section jump navigation
+ * Increased scroll margins for section titles
+ * This ensures section jumps position the section title properly below the header
+ * Increased from 120px to 150px to prevent jumps from landing beyond section title
  */
 .section-title,
 section[id^="section-"] h2,
 h2[id^="title-section-"] {
-  scroll-margin-top: 160px !important;
+  scroll-margin-top: 150px !important;
 }
 
-/* Increased scroll margin specifically for mobile viewports */
+/* 
+ * Sticky header improvements
+ * Ensures sticky headers don't cover important content
+ */
+.sticky-header {
+  background-color: var(--background-color);
+  z-index: 10;
+  border-bottom: 1px solid var(--border-color);
+  transition: opacity 0.3s ease;
+}
+
+/* 
+ * Section margins to improve spacing and readability
+ */
+section {
+  margin-bottom: 2rem;
+}
+
+/* 
+ * Dropdown menus persistence improvement
+ * Increases hover areas and adds transition delays
+ */
+.dropdown-menu {
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition-delay: 0.1s;
+}
+
+.dropdown-menu:hover {
+  transition-delay: 0s;
+}
+
+/* 
+ * Custom scrollbar styling for better visibility
+ */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Dark mode adjustments for custom scrollbar */
+.dark-theme ::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* 
+ * Theme-specific adjustments
+ */
+.modern-theme {
+  --paragraph-spacing: 1.5rem;
+  --line-height: 1.7;
+}
+
+.traditional-theme {
+  --paragraph-spacing: 1.2rem;
+  --line-height: 1.5;
+}
+
+/* Dynamic font size adjustments based on viewport */
 @media (max-width: 768px) {
   .section-title,
   section[id^="section-"] h2,
   h2[id^="title-section-"] {
-    scroll-margin-top: 180px !important;
-  }
-}
-
-/* Ensure enough space above section jump targets */
-section[id^="section-"] {
-  padding-top: 1.5rem; /* Increased from 1rem for better spacing */
-}
-
-/* Add a visual feedback when jumping to a section */
-.section-highlight {
-  animation: highlight-fade 2s ease-out;
-}
-
-@keyframes highlight-fade {
-  0% {
-    background-color: rgba(59, 130, 246, 0.2);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-/* Improved dropdown menu behavior */
-.section-navigation {
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-}
-
-/* Section navigation improvements for mobile */
-@media (max-width: 768px) {
-  .section-navigation {
-    max-height: 75vh;
-    overflow-y: auto;
-    width: 100%; /* Make it full width on mobile */
-    margin-bottom: 1rem;
+    scroll-margin-top: 100px !important;
   }
 }

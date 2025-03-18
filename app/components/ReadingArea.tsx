@@ -130,7 +130,19 @@ const ReadingArea: React.FC<ReadingAreaProps> = ({
         if (paragraphElement) {
           // Add a small delay to ensure the DOM is fully rendered
           setTimeout(() => {
-            paragraphElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Get header height to calculate proper offset
+            const header = document.querySelector('header');
+            const headerHeight = header ? header.offsetHeight : 60; // Default if header not found
+            
+            // Calculate scroll position with increased offset (from 16px to 40px)
+            const offset = headerHeight + 40; // Increased padding from default 16px
+            
+            // Use scrollTo instead of scrollIntoView for more control
+            window.scrollTo({
+              top: paragraphElement.offsetTop - offset,
+              behavior: 'smooth'
+            });
+            
             // Highlight the paragraph temporarily
             paragraphElement.classList.add('bg-yellow-100', 'dark:bg-yellow-900');
             setTimeout(() => {
