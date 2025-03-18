@@ -8,7 +8,7 @@ This guide provides step-by-step instructions for setting up a proper GitHub to 
 
 ```bash
 # Update package repositories
-sudo apt update && sudo apt upgrade -y
+c
 
 # Install essential development tools
 sudo apt install -y curl git build-essential
