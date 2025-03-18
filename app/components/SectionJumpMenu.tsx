@@ -28,7 +28,7 @@ const SectionJumpMenu: React.FC<SectionJumpMenuProps> = ({
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<any | null>(null);
 
   // Handle clicking outside to close the dropdown
   useEffect(() => {
