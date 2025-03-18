@@ -197,14 +197,16 @@ const ReadingArea: React.FC<ReadingAreaProps> = ({
   }
 
   return (
-    <div className={`
+    <div
+      className={`
       ${getFontFamilyClass()} 
       ${getFontSizeClass()} 
       ${getLineSpacingClass()} 
       ${getMarginWidthClass()} 
-      p-4 transition-colors duration-300
+      p-4 transition-colors duration-300 max-w-4xl mx-auto
       ${isModernTheme ? 'modern-theme' : 'traditional-theme'}
-    `}>
+    `}
+    >
       <h2 className={`font-bold mb-2 ${getFontSizeClass() === 'text-sm' ? 'text-lg' : getFontSizeClass() === 'text-base' ? 'text-xl' : getFontSizeClass() === 'text-lg' ? 'text-2xl' : getFontSizeClass() === 'text-xl' ? 'text-3xl' : 'text-4xl'}`}>
         {selectedPaper}
       </h2>
