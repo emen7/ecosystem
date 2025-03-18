@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
+import Header from './components/minimal/Header';
 
 export default function Home() {
   return (
     <ThemeProvider>
-      <main className="min-h-screen p-4 bg-gray-900 text-white">
+      <main className="min-h-screen p-4 pt-20 bg-gray-900 text-white">
+        <Header />
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-6 text-center">UB-Reader Next.js Application</h1>
           
