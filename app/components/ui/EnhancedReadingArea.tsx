@@ -324,7 +324,7 @@ const EnhancedReadingArea: React.FC<ReadingAreaProps> = ({
             return (
               <div key={section.id} id={section.id} className="mb-8">
                 <h2
-                  className={`font-semibold mb-4 pt-4 border-t border-opacity-20 border-current ${
+                  className={`font-semibold mb-4 pt-4 ${
                     getFontSizeClass() === "text-sm"
                       ? "text-lg"
                       : getFontSizeClass() === "text-base"
