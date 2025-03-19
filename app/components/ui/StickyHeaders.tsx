@@ -20,6 +20,7 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
   const [isSectionDropdownOpen, setIsSectionDropdownOpen] = useState(false);
   const { theme } = useTheme();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   // Initialize observer for sections
   useEffect(() => {
@@ -159,17 +160,18 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
   return (
     <>
       {/* Sticky Part & Paper Title */}
-      <div className={`sticky top-14 z-10 ${getBgColor()} ${getBorderColor()} border-b py-1 px-4 max-w-4xl mx-auto w-full`}>
+      <div 
+        ref={headerRef}
+        className={`sticky top-14 z-10 ${getBgColor()} ${getBorderColor()} border-b py-1 px-4 max-w-4xl mx-auto w-full`}
+      >
         <div className={`text-xs ${getTextColor().split(' ')[2]} text-center`}>{activePart}</div>
         <div className={`text-sm font-semibold ${getTextColor().split(' ')[0]} text-center`}>{paperTitle}</div>
       </div>
       
       {/* Sticky Section Title with Dropdown */}
       <div className={`sticky top-24 z-9 ${getBgColor()} ${getBorderColor()} border-b py-2 px-4 flex items-center max-w-4xl mx-auto w-full`}>
-        <div className={`text-sm ${getTextColor().split(' ')[1]} flex-1`}>{currentSection}</div>
-        
-        {/* Section Jump Dropdown */}
-        <div className="relative" ref={dropdownRef}>
+        {/* Section Jump Dropdown - Now on the left */}
+        <div className="relative mr-3" ref={dropdownRef}>
           <button
             className={`flex items-center space-x-1 ${getButtonBgColor()} ${getTextColor().split(' ')[1]} px-2 py-1 rounded text-xs`}
             onClick={() => setIsSectionDropdownOpen(!isSectionDropdownOpen)}
@@ -193,7 +195,7 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
           
           {/* Dropdown Menu */}
           <div
-            className={`absolute right-0 mt-1 w-64 ${getDropdownBgColor()} rounded-md shadow-lg z-50 transition-opacity duration-200 ease-in-out ${
+            className={`absolute left-0 mt-1 w-64 ${getDropdownBgColor()} rounded-md shadow-lg z-50 transition-opacity duration-200 ease-in-out ${
               isSectionDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
             }`}
             role="menu"
@@ -201,7 +203,7 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
             aria-labelledby="section-dropdown-button"
           >
             <div className="max-h-72 overflow-y-auto py-1">
-              {sections.map((section) => (
+              {sections.map((section, index) => (
                 <button
                   key={section.id}
                   className={`block w-full text-left px-4 py-2 text-sm ${
@@ -212,11 +214,17 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
                   onClick={() => handleSectionSelect(section.id)}
                   role="menuitem"
                 >
-                  {section.title}
+                  {(index + 1) + ". " + section.title}
                 </button>
               ))}
             </div>
           </div>
+        </div>
+        
+        {/* Section Title - Now on the right */}
+        <div className={`text-sm ${getTextColor().split(' ')[1]} flex-1`}>
+          {activeSection && sections.findIndex(s => s.id === activeSection) > -1 ? 
+            `${sections.findIndex(s => s.id === activeSection) + 1}. ${currentSection}` : currentSection}
         </div>
       </div>
     </>
