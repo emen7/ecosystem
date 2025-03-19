@@ -334,7 +334,7 @@ const EnhancedReadingArea: React.FC<ReadingAreaProps> = ({
                       : "text-3xl"
                   }`}
                 >
-                  {sectionIndex}. {section.title.toUpperCase()}
+                  {sectionIndex}. {section.title ? section.title.toUpperCase() : ""}
                 </h2>
 
                 {/* Show paragraphs that belong to this section */}

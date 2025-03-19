@@ -214,7 +214,7 @@ const StickyHeaders: React.FC<StickyHeadersProps> = ({
                   onClick={() => handleSectionSelect(section.id)}
                   role="menuitem"
                 >
-                  {(index + 1) + ". " + section.title}
+                  {(index + 1) + ". " + (section.title || "")}
                 </button>
               ))}
             </div>
