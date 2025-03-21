@@ -90,6 +90,44 @@ section {
   --line-height: 1.5;
 }
 
+/* 
+ * Text content layout improvements
+ * Ensures better text centering on larger screens
+ */
+.text-content {
+  margin: 0 auto;
+  max-width: min(90%, 65ch);
+}
+
+@media (min-width: 1200px) {
+  .text-content {
+    max-width: min(80%, 70ch);
+  }
+}
+
+/* Improve indentation for paragraphs */
+.modern-paragraph p {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure paper titles are properly centered */
+h2[id^="title-paper-"] {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Handle section titles differently than numbered sections */
+.section-title:not([id*="-0-"]) {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Center introductory sections */
+.section-title[id*="-0-"] {
+  text-align: center;
+}
+
 /* Dynamic font size adjustments based on viewport */
 @media (max-width: 768px) {
   .section-title,
