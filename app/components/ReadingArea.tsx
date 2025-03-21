@@ -205,45 +205,33 @@ const ReadingArea: React.FC<ReadingAreaProps> = ({
       ${getMarginWidthClass()} 
       p-4 transition-colors duration-300 max-w-4xl mx-auto
       ${isModernTheme ? 'modern-theme' : 'traditional-theme'}
-      text-content
     `}
     >
-      <h2 className={`font-bold mb-6 text-center ${getFontSizeClass() === 'text-sm' ? 'text-lg' : getFontSizeClass() === 'text-base' ? 'text-xl' : getFontSizeClass() === 'text-lg' ? 'text-2xl' : getFontSizeClass() === 'text-xl' ? 'text-3xl' : 'text-4xl'}`}>
-        {selectedPaper}
-      </h2>
+      <div className="text-center">
+        <h2 className={`font-bold mb-6 inline-block ${getFontSizeClass() === 'text-sm' ? 'text-lg' : getFontSizeClass() === 'text-base' ? 'text-xl' : getFontSizeClass() === 'text-lg' ? 'text-2xl' : getFontSizeClass() === 'text-xl' ? 'text-3xl' : 'text-4xl'}`}>
+          {selectedPaper}
+        </h2>
+      </div>
+      
       {selectedSection && (
-        <h3 className={`font-semibold mb-6 ${selectedSection.match(/^\d+\./) ? '' : 'text-center'} ${getFontSizeClass() === 'text-sm' ? 'text-base' : getFontSizeClass() === 'text-base' ? 'text-lg' : getFontSizeClass() === 'text-lg' ? 'text-xl' : getFontSizeClass() === 'text-xl' ? 'text-2xl' : 'text-3xl'}`}>
-          {selectedSection}
-        </h3>
+        <div className={selectedSection.match(/^\d+\./) ? '' : 'text-center'}>
+          <h3 className={`font-semibold mb-6 inline-block ${getFontSizeClass() === 'text-sm' ? 'text-base' : getFontSizeClass() === 'text-base' ? 'text-lg' : getFontSizeClass() === 'text-lg' ? 'text-xl' : getFontSizeClass() === 'text-xl' ? 'text-2xl' : 'text-3xl'}`}>
+            {selectedSection}
+          </h3>
+        </div>
       )}
       
       {paragraphs.length > 0 ? (
         <div className={`${isModernTheme ? 'modern-paragraph' : 'traditional-paragraph'}`}>
-          {/* Introduction section (section 0) */}
-          {paragraphs
-            .filter(p => p.id.includes('-0-'))
-            .map((paragraph, index) => (
-              <p 
-                key={paragraph.id} 
-                id={paragraph.id}
-                className="mb-4 transition-colors duration-300"
-              >
-                {paragraph.text}
-              </p>
-            ))}
-          
-          {/* Numbered sections */}
-          {paragraphs
-            .filter(p => !p.id.includes('-0-'))
-            .map((paragraph, index) => (
-              <p 
-                key={paragraph.id} 
-                id={paragraph.id}
-                className="mb-4 transition-colors duration-300"
-              >
-                {paragraph.text}
-              </p>
-            ))}
+          {paragraphs.map((paragraph, index) => (
+            <p 
+              key={paragraph.id} 
+              id={paragraph.id}
+              className="mb-4 transition-colors duration-300"
+            >
+              {paragraph.text}
+            </p>
+          ))}
         </div>
       ) : (
         <div className={`whitespace-pre-line ${isModernTheme ? 'modern-paragraph' : 'traditional-paragraph'}`}>

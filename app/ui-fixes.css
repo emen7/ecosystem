@@ -94,14 +94,14 @@ section {
  * Text content layout improvements
  * Ensures better text centering on larger screens
  */
-.text-content {
+.max-w-4xl {
   margin: 0 auto;
-  max-width: min(90%, 65ch);
+  max-width: min(90%, 65ch) !important;
 }
 
 @media (min-width: 1200px) {
-  .text-content {
-    max-width: min(80%, 70ch);
+  .max-w-4xl {
+    max-width: min(80%, 70ch) !important;
   }
 }
 
