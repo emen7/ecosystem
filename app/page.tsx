@@ -1,24 +1,28 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import { EnhancedThemeProvider } from "./contexts/EnhancedThemeContext";
+import HeaderWithMenu from "./components/ui/HeaderWithMenu";
+import EnhancedReadingArea from "./components/ui/EnhancedReadingArea";
 
-// Redirect the home page to the Enhanced UI demo
 export default function Home() {
-  const router = useRouter();
+  // Default to showing Paper 1 in the enhanced UI
+  const paperTitle = "Paper 1: The Universal Father";
   
-  useEffect(() => {
-    // Redirect to Enhanced UI demo
-    router.push('/enhanced');
-  }, [router]);
-
-  // Return a minimal loading state while redirecting
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">Loading Enhanced UB Reader...</h1>
-        <div className="w-12 h-12 border-4 border-blue-500 rounded-full border-t-transparent animate-spin mx-auto"></div>
+    <EnhancedThemeProvider>
+      <div className="min-h-screen">
+        {/* Header with Navigation and Settings */}
+        <HeaderWithMenu />
+
+        {/* Main Content */}
+        <main className="pt-14">
+          <EnhancedReadingArea
+            selectedPaper={paperTitle}
+            selectedSection=""
+          />
+        </main>
       </div>
-    </div>
+    </EnhancedThemeProvider>
   );
 }
