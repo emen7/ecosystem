@@ -286,7 +286,7 @@ const EnhancedReadingArea: React.FC<ReadingAreaProps> = ({
       <div className="pt-32">
         {" "}
         {/* Padding top to account for sticky headers */}
-        <div
+          <div
           className={`
             ${getFontFamilyClass()} 
             ${getFontSizeClass()} 
@@ -294,21 +294,24 @@ const EnhancedReadingArea: React.FC<ReadingAreaProps> = ({
             ${getMarginWidthClass()} 
             p-4 transition-colors duration-300 max-w-4xl mx-auto
             ${isModernTheme ? "modern-theme" : "traditional-theme"}
+            reading-content
           `}
         >
-          <h1
-            className={`font-bold mb-6 text-center ${
-              getFontSizeClass() === "text-sm"
-                ? "text-xl"
-                : getFontSizeClass() === "text-base"
-                ? "text-2xl"
-                : getFontSizeClass() === "text-lg"
-                ? "text-3xl"
-                : "text-4xl"
-            }`}
-          >
-            {selectedPaper}
-          </h1>
+          <div className="text-center">
+            <h1
+              className={`font-bold mb-6 inline-block ${
+                getFontSizeClass() === "text-sm"
+                  ? "text-xl"
+                  : getFontSizeClass() === "text-base"
+                  ? "text-2xl"
+                  : getFontSizeClass() === "text-lg"
+                  ? "text-3xl"
+                  : "text-4xl"
+              }`}
+            >
+              {selectedPaper}
+            </h1>
+          </div>
 
           {/* Content organized by sections */}
           {sections.map((section) => {
