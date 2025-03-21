@@ -32,19 +32,6 @@ section {
 }
 
 /* 
- * Dropdown menus persistence improvement
- * Increases hover areas and adds transition delays
- */
-.dropdown-menu {
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  transition-delay: 0.1s;
-}
-
-.dropdown-menu:hover {
-  transition-delay: 0s;
-}
-
-/* 
  * Custom scrollbar styling for better visibility
  */
 ::-webkit-scrollbar {
@@ -94,16 +81,21 @@ section {
  * Text content layout improvements
  * Ensures better text centering on larger screens
  */
-.max-w-4xl,
-.reading-content {
-  margin: 0 auto;
-  max-width: min(90%, 65ch) !important;
+.max-w-readable {
+  width: 100% !important;
+  max-width: 65ch !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.centered-content {
+  margin: 0 auto !important;
+  width: 100% !important;
 }
 
 @media (min-width: 1200px) {
-  .max-w-4xl,
-  .reading-content {
-    max-width: min(80%, 70ch) !important;
+  .max-w-readable {
+    max-width: 70ch !important;
   }
 }
 
@@ -114,9 +106,21 @@ section {
 }
 
 /* Ensure paper titles are properly centered */
-h2[id^="title-paper-"] {
-  text-align: center;
+h2[id^="title-paper-"],
+h2 {
+  text-align: center !important;
   margin-bottom: 2rem;
+  width: 100% !important;
+}
+
+/* Center titles and content more aggressively */
+.text-center,
+.text-center * {
+  text-align: center !important;
+  width: 100% !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* Handle section titles differently than numbered sections */
@@ -136,5 +140,9 @@ h2[id^="title-paper-"] {
   section[id^="section-"] h2,
   h2[id^="title-section-"] {
     scroll-margin-top: 100px !important;
+  }
+
+  .max-w-readable {
+    max-width: 95% !important;
   }
 }
